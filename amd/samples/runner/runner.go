@@ -15,6 +15,7 @@ import (
 	"github.com/sarchlab/mgpusim/v4/amd/driver"
 	"github.com/sarchlab/mgpusim/v4/amd/samples/runner/emusystem"
 	"github.com/sarchlab/mgpusim/v4/amd/samples/runner/timingconfig"
+	"github.com/sarchlab/mgpusim/v4/amd/timing/tlbtracer"
 	"github.com/sarchlab/mgpusim/v4/amd/sampling"
 )
 
@@ -37,6 +38,7 @@ type Runner struct {
 
 	GPUIDs     []int
 	benchmarks []benchmarks.Benchmark
+	tlbTracers []*tlbtracer.TLBTracer
 }
 
 // Init initializes the platform simulate
@@ -87,12 +89,11 @@ func (r *Runner) buildTimingPlatform() {
 		WithSimulation(r.simulation).
 		WithNumGPUs(r.GPUIDs[len(r.GPUIDs)-1])
 
-	if *magicMemoryCopy {
-		b = b.WithMagicMemoryCopy()
-	}
+	// if *magicMemoryCopy {
+	// 	b = b.WithMagicMemoryCopy()
+	// }
 
-	r.platform = b.Build()
-	r.reporter = newReporter(r.simulation)
+	r.platform, r.tlbTracers = b.Build()
 	r.configureVisTracing()
 }
 

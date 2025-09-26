@@ -12,6 +12,7 @@ require (
 	github.com/tebeka/atexit v0.3.0
 	go.uber.org/mock v0.6.0
 	gonum.org/v1/gonum v0.15.1
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 require (
@@ -38,7 +39,7 @@ require (
 	golang.org/x/text v0.28.0 // indirect
 	golang.org/x/tools v0.36.0 // indirect
 )
-
+replace github.com/sarchlab/akita/v4 => ./akita
 // replace github.com/syifan/goseth => ../goseth
 
 go 1.25
